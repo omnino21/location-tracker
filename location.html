@@ -4,59 +4,31 @@
   <title>Get My Location</title>
 </head>
 <body>
-  <h2>Enter Your Name and Save Your Location</h2>
-
-  <label for="name">Name:</label>
-  <input type="text" id="name" placeholder="Enter your name" required />
-  <br><br>
-
-  <button id="saveBtn" onclick="saveLocation()">Save My Location</button>
+  <h2>Click to Save Your Location</h2>
+  <button onclick="saveLocation()">Save My Location</button>
   <p id="status"></p>
 
   <script>
     function saveLocation() {
-      const button = document.getElementById("saveBtn");
-      const status = document.getElementById("status");
-      const name = document.getElementById("name").value.trim();
-
-      if (!name) {
-        status.innerText = "Please enter your name.";
-        return;
-      }
-
-      button.disabled = true;
-      status.innerText = "Saving location...";
-
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          const scriptURL = "https://script.google.com/macros/s/AKfycbzJV2dxk7M1s1RtnpjCLjMWGCB76TNN6SkxmqaFgU4/dev"; // Replace with your real script URL
-          const timestamp = new Date().getTime();
-
-          fetch(`${scriptURL}?name=${encodeURIComponent(name)}&lat=${lat}&lon=${lon}&t=${timestamp}`)
+          const scriptURL = "YOUR_SCRIPT_URL_HERE";
+          fetch(`${scriptURL}?lat=${lat}&lon=${lon}`)
             .then(response => response.text())
             .then(data => {
-              status.innerText = data;
+              document.getElementById("status").innerText = data;
             })
             .catch(error => {
-              status.innerText = "Error: " + error;
-            })
-            .finally(() => {
-              button.disabled = false;
+              document.getElementById("status").innerText = "Error: " + error;
             });
         }, function(error) {
-          let msg = "Error retrieving location.";
-          if (error.code === 1) msg = "Permission denied.";
-          if (error.code === 2) msg = "Position unavailable.";
-          if (error.code === 3) msg = "Location request timed out.";
-          status.innerText = msg;
-          button.disabled = false;
+          document.getElementById("status").innerText = "Permission denied or unavailable.";
         });
       } else {
         alert("Geolocation is not supported by this browser.");
-        button.disabled = false;
       }
     }
   </script>
