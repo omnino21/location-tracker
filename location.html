@@ -32,7 +32,7 @@
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          const scriptURL = "YOUR_SCRIPT_URL_HERE"; // Replace with your real script URL
+          const scriptURL = "https://script.google.com/macros/s/AKfycbzJV2dxk7M1s1RtnpjCLjMWGCB76TNN6SkxmqaFgU4/dev"; // Replace with your real script URL
           const timestamp = new Date().getTime();
 
           fetch(`${scriptURL}?name=${encodeURIComponent(name)}&lat=${lat}&lon=${lon}&t=${timestamp}`)
