@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get My Location</title>
+</head>
+<body>
+  <h2>Click to Save Your Location</h2>
+  <button onclick="saveLocation()">Save My Location</button>
+  <p id="status"></p>
+
+  <script>
+    function saveLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const scriptURL = "https://script.google.com/macros/s/AKfycbzPw6sibTehMxVasPrBBqq5_4RFaxPvkV4MeIr5zKmPjowRrY9TtFnTr7U1IGdc63NC/exec";
+          fetch(`${scriptURL}?lat=${lat}&lon=${lon}`)
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById("status").innerText = data;
+            })
+            .catch(error => {
+              document.getElementById("status").innerText = "Error: " + error;
+            });
+        }, function(error) {
+          document.getElementById("status").innerText = "Permission denied or unavailable.";
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</body>
+</html>
