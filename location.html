@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Get My Location</title>
+  <title>Location Tracker</title>
 </head>
 <body>
-  <h2>Click to Save Your Location</h2>
-  <button onclick="saveLocation()">Save My Location</button>
-  <p id="status"></p>
+  <h2>Ilagay ang iyong pangalan at i-click ang button</h2>
+
+  <label for="name">Pangalan:</label><br>
+  <input type="text" id="name" name="name" placeholder="I-type ang pangalan mo"><br><br>
+
+  <button onclick="getLocation()">Save My Location</button>
 
   <script>
-    function saveLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
+    function getLocation() {
+      const name = document.getElementById("name").value;
 
-          const scriptURL = "https://script.google.com/macros/s/AKfycbzPw6sibTehMxVasPrBBqq5_4RFaxPvkV4MeIr5zKmPjowRrY9TtFnTr7U1IGdc63NC/exec";
-          fetch(`${scriptURL}?lat=${lat}&lon=${lon}`)
-            .then(response => response.text())
-            .then(data => {
-              document.getElementById("status").innerText = data;
-            })
-            .catch(error => {
-              document.getElementById("status").innerText = "Error: " + error;
-            });
-        }, function(error) {
-          document.getElementById("status").innerText = "Permission denied or unavailable.";
-        });
-      } else {
-        alert("Geolocation is not supported by this browser.");
+      if (!name) {
+        alert("Pakilagay muna ang pangalan.");
+        return;
       }
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, latitude, longitude })
+        });
+      });
     }
   </script>
 </body>
