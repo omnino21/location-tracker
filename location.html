@@ -15,7 +15,7 @@
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          const scriptURL = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLin3hWnhyo8WNwo_LDAIiWrwn9lAjoSmy_gD_tteXRSoYVQcn3f-c2dqkgc_YjdOcPqT72l_QgT_YB2wsjOKoqL28I3PG6sZD63zB4uMvEsPVvvwDKfsn6E6mdAy61gmvLwWqst3WQe-HES2nyuw9b8i5su_Yd9w0W_pyaG9XH1hayAK1hJ8IJOSa4WEvNhhhXSvi-UCUwZszsxdx21u5FKw7fCJFj1SAxIn4JbwdO8CvKw6npzeqXgwUw_zBV57yuAaLzE2iEv6k35AEnzANf_nR0thw&lib=MBGYCCjVwNOdW1W7Ig7hs4Jdncpr9ASqe";
+          const scriptURL = "https://script.google.com/macros/s/AKfycbzPw6sibTehMxVasPrBBqq5_4RFaxPvkV4MeIr5zKmPjowRrY9TtFnTr7U1IGdc63NC/exec";
           fetch(`${scriptURL}?lat=${lat}&lon=${lon}`)
             .then(response => response.text())
             .then(data => {
